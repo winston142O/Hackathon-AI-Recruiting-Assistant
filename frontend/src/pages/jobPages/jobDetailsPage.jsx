@@ -60,7 +60,7 @@ export function JobDetailPage() {
             <h1 className="mb-4" style={{ textAlign: "left" }}>Título de la Vacante:</h1>
             <p>{job.jobTitle}</p>
             <h2>Descripción:</h2>
-            <p>{job.jobDescription}</p>
+            <p style={{ whiteSpace: "pre-line" }}>{job.jobDescription}</p>
 
             <Link to="/jobs" className="btn btn-secondary mb-3">Volver a la lista de trabajos</Link>
 
