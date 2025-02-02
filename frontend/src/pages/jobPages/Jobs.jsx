@@ -169,7 +169,7 @@ export function JobPage() {
                                     </div>
                                     <div className="d-flex flex-column gap-2">
                                         <button className="btn btn-primary">Visualizar</button>
-                                        <button className="btn btn-secondary">Editar</button>
+                                        <Link className="btn btn-secondary" to={`/jobs/editJob/${job._id}`}>Editar</Link>
                                         <button className="btn btn-danger">Eliminar</button>
                                     </div>
                                 </div>
