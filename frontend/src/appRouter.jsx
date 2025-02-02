@@ -1,7 +1,6 @@
 // src/appRouter.jsx
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-
 import { JobRoutes } from "./routes/jobRoutes";
 import { Navbar } from "./components/NavBar";
 

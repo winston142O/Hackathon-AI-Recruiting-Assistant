@@ -71,7 +71,7 @@ export default function Dashboard() {
 
   // Ordenar los candidatos por años de experiencia (ascendente)
   const sortedApplicants = [...applications].sort(
-    (a, b) => a.experienceYears - b.experienceYears
+    (a, b) => b.experienceYears - a.experienceYears
   );
 
   return (
