@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Pie } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie, Line } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, TimeScale } from "chart.js";
 import axios from "axios";
 import AOS from "aos";
-import "aos/dist/aos.css"; // Estilos de AOS
+import "aos/dist/aos.css"; // AOS for animations
 import "./Dashboard.css";
 import CountUp from "react-countup";
+import "chartjs-adapter-date-fns"; // Import time adapter for date parsing
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, TimeScale);
 
-// Componente principal del Dashboard
 export default function Dashboard() {
-  const { jobId } = useParams(); // ID de la vacante
+  const { jobId } = useParams();
   const jobsUrl = import.meta.env.VITE_REACT_APP_JOBS_URL;
 
   const [applications, setApplications] = useState([]);
@@ -44,17 +44,13 @@ export default function Dashboard() {
   if (loading) return <p className="text-center mt-4">Cargando...</p>;
   if (error) return <p className="text-danger text-center mt-4">Error: {error.message || error}</p>;
 
-  // Procesar datos para el pie chart basado en experiencia
+  // 🔹 Process data for Pie Chart (Experience Distribution)
   const experienceData = {};
   applications.forEach(({ experienceYears }) => {
-    if (!experienceData[experienceYears]) {
-      experienceData[experienceYears] = 0;
-    }
-    experienceData[experienceYears]++;
+    experienceData[experienceYears] = (experienceData[experienceYears] || 0) + 1;
   });
 
-  // Formatear datos para ChartJS
-  const chartData = {
+  const pieChartData = {
     labels: Object.keys(experienceData).map((years) => `${years} años`),
     datasets: [
       {
@@ -66,13 +62,59 @@ export default function Dashboard() {
     ],
   };
 
-  // Contar total de aplicaciones
-  const totalApplicants = applications.length;
+  // 🔹 Process data for Line Chart (Experience over Time)
+  const sortedApplications = [...applications].sort((a, b) => new Date(a.appliedAt) - new Date(b.appliedAt));
 
-  // Ordenar los candidatos por años de experiencia (ascendente)
-  const sortedApplicants = [...applications].sort(
-    (a, b) => b.experienceYears - a.experienceYears
-  );
+  const lineChartData = {
+    labels: sortedApplications.map((app) => new Date(app.appliedAt)), // X-axis (time)
+    datasets: [
+      {
+        label: "Experiencia en años",
+        data: sortedApplications.map((app) => app.experienceYears), // Y-axis (experience)
+        borderColor: "#007bff",
+        backgroundColor: "rgba(0, 123, 255, 0.2)",
+        pointBorderColor: "#007bff",
+        pointBackgroundColor: "#007bff",
+        tension: 0.3, // Smooth curves
+      },
+    ],
+  };
+
+  const lineChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        type: "time",
+        time: {
+          unit: "day",
+          tooltipFormat: "yyyy-MM-dd HH:mm",
+          displayFormats: {
+            day: "yyyy-MM-dd",
+          },
+        },
+        title: {
+          display: true,
+          text: "Fecha de Aplicación",
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Años de Experiencia",
+        },
+        ticks: {
+          stepSize: 1, // Increment by 1 year
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: true,
+        position: "top",
+      },
+    },
+  };
 
   return (
     <div className="dashboard-container">
@@ -82,43 +124,38 @@ export default function Dashboard() {
       <div className="dashboard-content">
         {/* Sección del Total de Aplicantes */}
         <div className="chart-section">
-          {/* Contenedor del total de aplicantes con animación fade-right */}
           <div className="total-applicants" data-aos="fade-right">
             <h2>Total Aplicaciones</h2>
             <p className="total-number">
-              <CountUp start={0} end={totalApplicants} duration={3} />
+              <CountUp start={0} end={applications.length} duration={3} />
             </p>
           </div>
 
-          {/* Pie Chart basado en años de experiencia */}
+          {/* Pie Chart */}
           <div className="pie-chart" data-aos="zoom-in">
-            <Pie
-              data={chartData}
-              options={{
-                responsive: true, // Gráfico responsive
-                maintainAspectRatio: false, // Permite modificar la relación de aspecto
-                plugins: {
-                  legend: {
-                    position: "top",
-                    labels: {
-                      font: {
-                        size: 12,
-                      },
-                    },
-                  },
-                  title: { // Configuración del título
-                    display: true,
-                    text: "Distribución de Experiencia (Años)",
-                    color: "#fff",
-                    font: {
-                      size: 14,
-                    },
-                  },
+            <Pie data={pieChartData} options={{
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { position: "top" },
+                title: {
+                  display: true,
+                  text: "Distribución de Experiencia (Años)",
                 },
-              }}
-              height={750} // Altura del gráfico
-              width={750} // Ancho del gráfico
-            />
+              },
+            }} height={750} width={750} />
+          </div>
+
+          {/* Line Chart */}
+          <div className="line-chart mt-5" data-aos="fade-left">
+            <h2 className="text-center">Tendencias de Aplicación vs. Experiencia</h2>
+            {applications.length > 0 ? (
+              <div className="chart-container">
+                <Line data={lineChartData} options={lineChartOptions} />
+              </div>
+            ) : (
+              <p className="text-center">Cargando datos...</p>
+            )}
           </div>
         </div>
 
@@ -126,17 +163,17 @@ export default function Dashboard() {
         <div className="top-list" data-aos="fade-left">
           <h2>Top Candidatos (Más Experimentados)</h2>
           <ul className="applicants-list">
-            {sortedApplicants.map((applicant, index) => (
-              <li key={index} className="applicant-item">
-                <span>{`Candidato #${index + 1}`}</span>
-                <span className="experience">
-                  {applicant.experienceYears} años
-                </span>
-                <Link className="btn btn-primary" to={`/jobs/${jobId}/applications/${applicant._id}/review`}>
-                  Visualizar Reseña
-                </Link>
-              </li>
-            ))}
+            {sortedApplications
+              .sort((a, b) => b.experienceYears - a.experienceYears)
+              .map((applicant, index) => (
+                <li key={index} className="applicant-item">
+                  <span>{`Candidato #${index + 1}`}</span>
+                  <span className="experience">{applicant.experienceYears} años</span>
+                  <Link className="btn btn-primary" to={`/jobs/${jobId}/applications/${applicant._id}/review`}>
+                    Visualizar Reseña
+                  </Link>
+                </li>
+              ))}
           </ul>
         </div>
       </div>

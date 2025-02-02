@@ -13,6 +13,7 @@ h1 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
+  align-items: start;
 }
 
 .chart-section {
@@ -40,10 +41,23 @@ h1 {
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
+.line-chart {
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  min-height: 400px;
+}
+
+.chart-container {
+  height: 400px;
+  width: 100%;
+}
+
 .top-list {
   padding: 1.5rem;
   border-radius: 8px;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  min-height: 400px;
 }
 
 .applicants-list {
@@ -60,28 +74,6 @@ h1 {
   margin: 0.5rem 0;
   border-radius: 4px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-}
-
-/* Mantenemos los estilos de status */
-.status {
-  padding: 0.25rem 0.75rem;
-  border-radius: 12px;
-  font-size: 0.8em;
-}
-
-.status.hired {
-  background: #4CAF50;
-  color: white;
-}
-
-.status.pending {
-  background: #9E9E9E;
-  color: white;
-}
-
-.status.rejected {
-  background: #F44336;
-  color: white;
 }
 
 @media (max-width: 768px) {
