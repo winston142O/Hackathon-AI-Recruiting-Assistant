@@ -1,0 +1,91 @@
+.dashboard-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.dashboard-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.chart-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.total-applicants {
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.total-number {
+  font-size: 3em;
+  margin: 0.5rem 0;
+  color: #646cff;
+}
+
+.pie-chart {
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.top-list {
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.applicants-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.applicant-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Mantenemos los estilos de status */
+.status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.8em;
+}
+
+.status.hired {
+  background: #4CAF50;
+  color: white;
+}
+
+.status.pending {
+  background: #9E9E9E;
+  color: white;
+}
+
+.status.rejected {
+  background: #F44336;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .dashboard-content {
+    grid-template-columns: 1fr;
+  }
+}
