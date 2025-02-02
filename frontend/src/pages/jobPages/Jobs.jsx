@@ -17,6 +17,7 @@ export function JobPage() {
 
     // Estado para el modal de eliminación
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
     const [jobToDelete, setJobToDelete] = useState(null);
 
     // Estado de los filtros
@@ -58,7 +59,8 @@ export function JobPage() {
     // Abrir el modal y guardar el job a eliminar
     const handleDeleteClick = (job) => {
         setJobToDelete(job);
-        setShowDeleteModal(true);
+        setModalVisible(true);
+        setTimeout(() => setShowDeleteModal(true), 10);
     };
 
     // Confirmar eliminación
@@ -77,6 +79,12 @@ export function JobPage() {
                 setError(error);
             })
             .finally(() => setLoading(false));
+    };
+
+    // Cerrar modal
+    const handleCloseModal = () => {
+        setShowDeleteModal(false);
+        setTimeout(() => setModalVisible(false), 300);
     };
 
     useEffect(() => {
@@ -210,24 +218,35 @@ export function JobPage() {
             )}
 
             {/* Modal de Confirmación de Eliminación */}
-            {showDeleteModal && (
-                <div className="modal fade show d-block" tabIndex="-1" role="dialog">
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title">Confirmar Eliminación</h5>
-                                <button type="button" className="btn-close" onClick={() => setShowDeleteModal(false)}></button>
-                            </div>
-                            <div className="modal-body">
-                                <p>¿Estás seguro de que deseas eliminar la vacante <strong>{jobToDelete?.jobTitle}</strong>?</p>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" onClick={() => setShowDeleteModal(false)}>Cancelar</button>
-                                <button type="button" className="btn btn-danger" onClick={confirmDeleteJob}>Eliminar</button>
+            {modalVisible && (
+                <>
+                    {/* Backdrop */}
+                    <div className={`modal-backdrop fade ${showDeleteModal ? "show" : ""}`} />
+
+                    {/* Modal */}
+                    <div 
+                        className={`modal fade ${showDeleteModal ? "show" : ""}`} 
+                        tabIndex="-1" 
+                        role="dialog" 
+                        style={{ display: showDeleteModal ? "block" : "none" }}
+                    >
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title">Confirmar Eliminación</h5>
+                                    <button type="button" className="btn-close" onClick={handleCloseModal}></button>
+                                </div>
+                                <div className="modal-body">
+                                    <p>¿Estás seguro de que deseas eliminar la vacante <strong>{jobToDelete?.jobTitle}</strong>?</p>
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>Cancelar</button>
+                                    <button type="button" className="btn btn-danger" onClick={confirmDeleteJob}>Eliminar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </>
             )}
         </div>
     );

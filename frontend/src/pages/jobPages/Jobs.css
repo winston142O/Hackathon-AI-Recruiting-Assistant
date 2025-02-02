@@ -22,9 +22,21 @@
 
 .modal.fade {
     opacity: 0;
-    transition: opacity 0.3s ease-in-out;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 
 .modal.fade.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.modal-backdrop.show {
     opacity: 1;
 }
