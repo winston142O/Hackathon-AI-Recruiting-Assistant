@@ -4,7 +4,7 @@ export function Navbar() {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-3 shadow-lg">
             <div className="container">
-                <Link to="/" className="navbar-brand">
+                <Link to="/Jobs" className="navbar-brand">
                     Demo Vacantes
                 </Link>
 

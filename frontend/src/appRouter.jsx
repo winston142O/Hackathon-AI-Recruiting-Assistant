@@ -12,8 +12,7 @@ export const AppRouter = () => {
                 <ToastContainer />
                 <Navbar />
 
-                <Routes>
-                    <Route path="/" element={<h1>Home</h1>} />
+                <Routes>    
                     <Route path="/jobs/*" element={<JobRoutes />} />
 
                     {/* 404 - Not Found (fallback) */}
