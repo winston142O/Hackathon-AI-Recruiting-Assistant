@@ -200,7 +200,10 @@ export function JobPage() {
                                         <p className="text-muted m-0">
                                             Publicado el {new Date(job.createdAt).toLocaleDateString()}
                                         </p>
-                                        <h2 className="card-title fs-4">{job.jobTitle}</h2>
+                                        <Link to={`/jobs/jobDetails/${job._id}`} className="card-title fs-4 text-primary">
+                                                {job.jobTitle}
+                                        </Link>
+
                                         <p className="card-text">{job.jobDescription}</p>
                                     </div>
                                     <div className="d-flex flex-column gap-2">
