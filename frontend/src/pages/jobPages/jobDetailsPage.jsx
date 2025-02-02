@@ -13,6 +13,7 @@ export function JobDetailPage() {
     
     const [cv, setCv] = useState(null);
     const [experienceYears, setExperienceYears] = useState("");
+    const [isApplied, setIsApplied] = useState(false); // Nuevo estado para deshabilitar el botón
 
     useEffect(() => {
         axios.get(`${jobsUrl}/jobs/${id}`)
@@ -48,7 +49,10 @@ export function JobDetailPage() {
                 "Content-Type": "multipart/form-data",
             }
         })
-        .then(() => toast.success("Aplicación enviada correctamente"))
+        .then(() => {
+            toast.success("Aplicación enviada correctamente");
+            setIsApplied(true); // Deshabilitar el botón
+        })
         .catch(() => toast.error("Error al enviar la aplicación"));
     };
 
@@ -98,7 +102,9 @@ export function JobDetailPage() {
                 </div>
 
                 {/* Submit Button */}
-                <button type="submit" className="btn btn-primary btn-lg w-100">Aplicar a esta vacante</button>
+                <button type="submit" className="btn btn-primary btn-lg w-100" disabled={isApplied}>
+                    {isApplied ? "Aplicación enviada" : "Aplicar a esta vacante"}
+                </button>
             </form>
         </div>
     );
