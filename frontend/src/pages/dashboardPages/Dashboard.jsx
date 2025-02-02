@@ -1,6 +1,6 @@
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { useEffect, useState} from 'react';
+import { useEffect} from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css'; // Estilos de AOS
 import "./Dashboard.css";
@@ -8,8 +8,6 @@ import CountUp from 'react-countup';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function Dashboard() {
-
-  const [totalApplicants, setTotalApplicants] = useState(24); // Establecemos el total de applicants como un estado
 
   // Datos dummy
   const applicantsData = {
@@ -32,6 +30,10 @@ export default function Dashboard() {
     ],
   };
 
+  const getTotalApplicants = () => {
+    return applicantsData.datasets[0].data.reduce((sum, num) => sum + num, 0);
+  };
+
   const topApplicants = [
     { name: 'John Doe', status: 'Hired' },
     { name: 'Jane Smith', status: 'Pending' },
@@ -52,7 +54,7 @@ export default function Dashboard() {
           <div className="total-applicants" data-aos="fade-right">
             <h2>Total Applicants</h2>
             <p className="total-number">
-              <CountUp start={0} end={totalApplicants} duration={3} /> {/* Animación del número */}
+              <CountUp start={0} end={24} duration={3} /> {/* Animación del número */}
             </p>          
           </div>
 

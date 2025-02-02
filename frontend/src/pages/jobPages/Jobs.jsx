@@ -204,7 +204,7 @@ export function JobPage() {
                                         <p className="card-text">{job.jobDescription}</p>
                                     </div>
                                     <div className="d-flex flex-column gap-2">
-                                        <button className="btn btn-primary">Visualizar</button>
+                                        <Link className="btn btn-primary" to={`/jobs/dashboard/${job._id}`}>Visualizar</Link>
                                         <Link className="btn btn-secondary" to={`/jobs/editJob/${job._id}`}>Editar</Link>
                                         <button className="btn btn-danger" onClick={() => handleDeleteClick(job)}>Eliminar</button>
                                     </div>

@@ -10,7 +10,7 @@ export function JobRoutes() {
             <Route path="/" element={<JobPage/>}/>
             <Route path="/createJob" element={<CreateJobs/>}/>
             <Route path="/editJob/:jobId" element={<EditJobs/>}/>
-            <Route path="/dashboard" element={<Dashboard/>}/>
+            <Route path="/dashboard/:jobId" element={<Dashboard/>}/>
         </Routes>
     );
 }
