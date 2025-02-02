@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Spinner } from "../components/Spinner";
 import { toast } from "react-toastify";
 import { useCallback } from "react";
+import { Link } from "react-router-dom";
 import "./Jobs.css";
 
 export function JobPage() {
@@ -22,6 +23,7 @@ export function JobPage() {
     const fetchJobs = useCallback(() => {
         setLoading(true);
         setError(null);
+    
         // Build query params
         const params = new URLSearchParams();
         if (filterName) {
@@ -33,16 +35,20 @@ export function JobPage() {
         if (filterSort) {
             params.set("sort", filterSort);
         }
-        axios
-            .get(`${jobsUrl}/jobs?${params.toString()}`)
-            .then((response) => {
-                setJobs(response.data);
-                setLoading(false);
-            })
-            .catch((err) => {
-                setError(err);
-                setLoading(false);
-            });
+    
+        // Simular una demora de 2 segundos para que se vea el spinner
+        setTimeout(() => {
+            axios
+                .get(`${jobsUrl}/jobs?${params.toString()}`)
+                .then((response) => {
+                    setJobs(response.data);
+                    setLoading(false);
+                })
+                .catch((err) => {
+                    setError(err);
+                    setLoading(false);
+                });
+        }, 2000);
     }, [filterName, filterOpen, filterSort, jobsUrl]);
 
     useEffect(() => {
@@ -135,7 +141,9 @@ export function JobPage() {
 
                 {/* Botóm para crear otra vacante */}
                 <div className="col-12 col-sm-2" style={{ alignSelf: "flex-end" }}>
-                    <button className="btn btn-success">Crear Nueva Vacante</button>
+                    <Link to="/jobs/createJob" className="btn btn-success" style={{ alignSelf: "flex-end" }}>
+                        Crear Nueva Vacante
+                    </Link>
                 </div>
             </div>
 
@@ -160,7 +168,8 @@ export function JobPage() {
                                         <p className="card-text">{job.jobDescription}</p>
                                     </div>
                                     <div className="d-flex flex-column gap-2">
-                                        <button className="btn btn-primary">Editar</button>
+                                        <button className="btn btn-primary">Visualizar</button>
+                                        <button className="btn btn-secondary">Editar</button>
                                         <button className="btn btn-danger">Eliminar</button>
                                     </div>
                                 </div>
