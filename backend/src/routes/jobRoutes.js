@@ -25,11 +25,31 @@ router.post("/", async (req, res) => {
 });
 
 /**
- * GET - Ver todos los jobs
+ * GET - Ver todos los jobs con filtros y ordenación
 */
 router.get("/", async (req, res) => {
     try {
-        const jobs = await Job.find();
+        const { name, open, sort } = req.query;
+        const query = {};
+
+        // Aplicar filtros
+        if (name) {
+            query.jobTitle = { $regex: name, $options: "i" };
+        }
+        if (open !== undefined) {
+            // 'open' es un string en req.query; convertir a booleano
+            query.open = open === "true";
+        }
+        let sortOption = {};
+        if (sort === "asc") {
+            sortOption.createdAt = 1; // ascendente
+        } else if (sort === "desc") {
+            sortOption.createdAt = -1; // descendente
+        }
+
+        // Recuperar jobs de la base de datos
+        const jobs = await Job.find(query).sort(sortOption);
+
         return res.json(jobs);
     } catch (error) {
         return res.status(500).json({ error: error.message });
