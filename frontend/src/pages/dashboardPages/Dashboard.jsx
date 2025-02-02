@@ -10,6 +10,7 @@ import CountUp from "react-countup";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+// Componente principal del Dashboard
 export default function Dashboard() {
   const { jobId } = useParams(); // ID de la vacante
   const jobsUrl = import.meta.env.VITE_REACT_APP_JOBS_URL;
@@ -81,6 +82,7 @@ export default function Dashboard() {
       <div className="dashboard-content">
         {/* Sección del Total de Aplicantes */}
         <div className="chart-section">
+          {/* Contenedor del total de aplicantes con animación fade-right */}
           <div className="total-applicants" data-aos="fade-right">
             <h2>Total Aplicaciones</h2>
             <p className="total-number">
@@ -93,8 +95,8 @@ export default function Dashboard() {
             <Pie
               data={chartData}
               options={{
-                responsive: true,
-                maintainAspectRatio: false,
+                responsive: true, // Gráfico responsive
+                maintainAspectRatio: false, // Permite modificar la relación de aspecto
                 plugins: {
                   legend: {
                     position: "top",
@@ -104,7 +106,7 @@ export default function Dashboard() {
                       },
                     },
                   },
-                  title: {
+                  title: { // Configuración del título
                     display: true,
                     text: "Distribución de Experiencia (Años)",
                     color: "#fff",
@@ -114,8 +116,8 @@ export default function Dashboard() {
                   },
                 },
               }}
-              height={750}
-              width={750}
+              height={750} // Altura del gráfico
+              width={750} // Ancho del gráfico
             />
           </div>
         </div>
