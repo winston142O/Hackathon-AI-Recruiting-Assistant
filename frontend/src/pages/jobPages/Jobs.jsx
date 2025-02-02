@@ -200,7 +200,7 @@ export function JobPage() {
                                         <p className="text-muted m-0">
                                             Publicado el {new Date(job.createdAt).toLocaleDateString()}
                                         </p>
-                                        <Link to={`/jobs/jobDetails/${job._id}`} className="card-title fs-4 text-primary">
+                                        <Link to={`/jobs/jobDetails/${job._id}`} className="card-title fs-4 text-primary" style={{ textDecoration: "none" }}>
                                                 {job.jobTitle}
                                         </Link>
 
