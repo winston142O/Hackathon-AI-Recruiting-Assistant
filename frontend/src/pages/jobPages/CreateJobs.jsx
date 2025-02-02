@@ -7,7 +7,18 @@ import { useNavigate } from "react-router-dom";
 export function CreateJobs() {
     const [formData, setFormData] = useState({ jobTitle: "", jobTags: "", jobDescription: "" });
     const jobsUrl = import.meta.env.VITE_REACT_APP_JOBS_URL;
-    const navigate = useNavigate();
+
+    useEffect(() => {
+        axios.get(`${jobsUrl}/jobs`)
+        .then(response => {
+            setJobs(Array.isArray(response.data) ? response.data : []);
+            setLoading(false);
+        })
+        .catch(error => {
+            setError(error);
+            setLoading(false);
+        });
+    }, []);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
