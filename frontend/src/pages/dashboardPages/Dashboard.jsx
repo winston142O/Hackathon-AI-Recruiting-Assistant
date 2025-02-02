@@ -1,10 +1,16 @@
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-//import axios from 'axios';
+import { useEffect, useState} from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // Estilos de AOS
 import "./Dashboard.css";
+import CountUp from 'react-countup';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function Dashboard() {
+
+  const [totalApplicants, setTotalApplicants] = useState(24); // Establecemos el total de applicants como un estado
+
   // Datos dummy
   const applicantsData = {
     labels: ['Hired', 'Rejected', 'Pending'],
@@ -33,49 +39,55 @@ export default function Dashboard() {
     { name: 'Sarah Williams', status: 'Hired' },
   ];
 
+  useEffect(() => {
+    AOS.init({ duration: 1000 }); // Inicia AOS con una duración de animación de 1 segundo
+  }, []);
+
   return (
     <div className="dashboard-container">
-      <h1>Applicants Dashboard</h1>
+      <h1 data-aos="fade-up">Applicants Dashboard</h1>
 
       <div className="dashboard-content">
         <div className="chart-section">
-          <div className="total-applicants">
+          <div className="total-applicants" data-aos="fade-right">
             <h2>Total Applicants</h2>
-            <p className="total-number">24</p>
+            <p className="total-number">
+              <CountUp start={0} end={totalApplicants} duration={3} /> {/* Animación del número */}
+            </p>          
           </div>
 
-          <div className="pie-chart">
-          <Pie
-        data={applicantsData}
-        options={{
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-            legend: {
-                position: 'top',
-                labels: {
-                font: {
-                    size: 12
+          <div className="pie-chart" data-aos="zoom-in">
+            <Pie
+              data={applicantsData}
+              options={{
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: {
+                    position: 'top',
+                    labels: {
+                      font: {
+                        size: 12
+                      }
+                    }
+                  },
+                  title: {
+                    display: true,
+                    text: 'Applicants Status',
+                    color: '#fff',
+                    font: {
+                      size: 14
+                    }
+                  }
                 }
-                }
-            },
-            title: {
-                display: true,
-                text: 'Applicants Status',
-                color: '#fff',
-                font: {
-                size: 14
-                }
-            }
-            }
-        }}
-        height={300}
-        width={400}
-        />
+              }}
+              height={750}
+              width={750}              
+            />
           </div>
         </div>
 
-        <div className="top-list">
+        <div className="top-list" data-aos="fade-left">
           <h2>Top Applicants</h2>
           <ul className="applicants-list">
             {topApplicants.map((applicant, index) => (
