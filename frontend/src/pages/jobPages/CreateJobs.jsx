@@ -32,7 +32,7 @@ export function CreateJobs() {
         <div className="container mt-4">
             <h1 className="mb-4">Crear Nueva Vacante</h1>
             <Link to="/jobs" className="btn btn-secondary" style={{ marginBottom: "1rem" }}>
-                Volver a la lista de jobs
+                Volver a la lista de trabajos
             </Link>
             
             <p className="text-muted">Completa el siguiente formulario para crear una nueva vacante.</p>
