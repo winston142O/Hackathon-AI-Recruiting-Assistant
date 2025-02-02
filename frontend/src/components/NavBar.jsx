@@ -4,7 +4,7 @@ export function Navbar() {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-3 shadow-lg">
             <div className="container">
-                <Link to="/" className="navbar-brand">
+                <Link to="/Jobs" className="navbar-brand">
                     Demo Vacantes
                 </Link>
 
@@ -24,8 +24,8 @@ export function Navbar() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ms-auto">
                         <li className="nav-item">
-                        <Link to="/jobs" className="nav-link">
-                            Vacantes
+                        <Link to="/Jobs/dashboard" className="nav-link">
+                            Dashboard
                         </Link>
                         </li>
                     </ul>
