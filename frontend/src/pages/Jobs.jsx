@@ -45,6 +45,21 @@ export function JobPage() {
             });
     }, [filterName, filterOpen, filterSort, jobsUrl]);
 
+    const deleteJob = (id) => {
+        window.confirm("Are you sure you want to delete this vacant?");
+        setLoading(true);
+        setError(null);
+        axios.delete(`${jobsUrl}/jobs/${id}`)
+        .then(response => {
+            setJobs(response.data);
+            setLoading(false);
+        })
+        .catch(error => {
+            console.error("error deleting job:", error);
+            setError(error);
+        });
+    }
+
     useEffect(() => {
         const delay = setTimeout(() => {
             fetchJobs();
@@ -73,19 +88,6 @@ export function JobPage() {
     const handleSortChange = (e) => {
         setFilterSort(e.target.value);
     };
-
-    const deleteJob = (id) => {
-        window.confirm("Are you sure you want to delete this vacant?");
-        axios.delete(`${jobsUrl}/jobs/${id}`)
-        .then(response => {
-            setJobs(response.data);
-            toast.success("Vacant deleted successfully");
-        })
-        .catch(error => {
-            console.error("error deleting job:", error);
-            setError(error);
-        });
-    }
 
     if (loading) {
         return <Spinner />;
