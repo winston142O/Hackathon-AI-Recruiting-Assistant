@@ -9,7 +9,6 @@ export const AppRouter = () => {
         <Router>
             <>
                 <ToastContainer />
-
                 <Routes>
                     <Route path="/" element={<h1>Home</h1>} />
                     <Route path="/jobs/*" element={<JobRoutes />} />
