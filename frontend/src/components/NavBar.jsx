@@ -24,8 +24,8 @@ export function Navbar() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ms-auto">
                         <li className="nav-item">
-                        <Link to="/Jobs/dashboard" className="nav-link">
-                            Dashboard
+                        <Link to="/Jobs/" className="nav-link">
+                            Vacantes
                         </Link>
                         </li>
                     </ul>
