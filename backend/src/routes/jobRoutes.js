@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const Job = require("../models/Job");
+const Application = require("../models/Application");
+const { upload } = require("../utils/s3Utils");
+const eventEmitter = require("../utils/events");
+const ApplicationReview = require("../models/ApplicationReview");
 
 /**
  * CREATE - Crear un nuevo job
@@ -128,6 +132,100 @@ router.delete("/:id", async (req, res) => {
         return res.json({ message: "Job Eliminado Exitosamente" });
     } catch (error) {
         return res.status(400).json({ error: "ID inválido" });
+    }
+});
+
+
+/**
+ * POST - Aplicar a una vacante
+ * Body: { "cv": <PDF File>, "experienceYears": 5 }
+ */
+router.post("/apply/:id", upload.single("cv"), async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { experienceYears } = req.body;
+
+        // Revisar que el job exista
+        const job = await Job.findById(id);
+        if (!job) {
+            return res.status(404).json({ error: "Job not found" });
+        }
+
+        if (!req.file) {
+            return res.status(400).json({ error: "No CV file uploaded!" });
+        }
+
+        // GUardar la aplicación en la base de datos
+        const newApplication = new Application({
+            jobId: id,
+            cvUrl: req.file.location, // S3 File URL
+            experienceYears,
+        });
+
+        await newApplication.save();
+
+        // Emitir evento
+        console.log(`Emitting event 'cvUploaded' for Application ID: ${newApplication._id}`);
+        eventEmitter.emit("cvUploaded", newApplication);
+
+        return res.status(201).json({
+            message: "Aplicación enviada exitosamente!",
+            application: newApplication,
+        });
+
+    } catch (error) {
+        console.error("Error applying for job:", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+/**
+ * GET - Recuperar el CV de un aplicante
+ */
+router.get("/applications/:applicationId", async (req, res) => {
+    try {
+        const { applicationId } = req.params;
+
+        // Buscar la aplicación en la base de datos
+        const application = await Application.findById(applicationId);
+        if (!application) {
+            return res.status(404).json({ error: "Application not found" });
+        }
+
+        // Return CV URL
+        return res.status(200).json({
+            message: "CV recuperado exitosamente",
+            cvUrl: application.cvUrl,  // URL del S3
+        });
+
+    } catch (error) {
+        console.error("Error retrieving CV:", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+/**
+ * GET - Retrieve CV review for an application
+ */
+router.get("/applications/:applicationId/review", async (req, res) => {
+    try {
+        const { applicationId } = req.params;
+
+        // Buscar la revisión en la base de datos
+        const review = await ApplicationReview.findOne({ applicationId });
+
+        if (!review) {
+            return res.status(404).json({ error: "Review not found" });
+        }
+
+        return res.status(200).json({
+            message: "Review retrieved successfully",
+            review,
+        });
+
+    } catch (error) {
+        console.error("Error fetching CV review:", error);
+        return res.status(500).json({ error: "Internal Server Error" });
     }
 });
 

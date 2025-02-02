@@ -4,6 +4,9 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const cors = require("cors");
+const eventEmitter = require("./utils/events");
+const reviewCV = require("./utils/cvReview");
+console.log("Emitidor de eventos inicializado.");
 
 // Cargar variables de entorno
 dotenv.config();
