@@ -15,13 +15,17 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
+// Add a simple logging middleware
+app.use((req, res, next) => {
+    console.log(`[${req.method}] ${req.originalUrl} ] ${new Date()}`);
+    next();
+});
 
 // Conectar a MongoDB
 mongoose
-.connect(process.env.MONGO_URI)
-.then(() => console.log("Conectado a MongoDB"))
-.catch((err) => console.error("Error de conexión:", err));
-
+    .connect(process.env.MONGO_URI)
+    .then(() => console.log("Conectado a MongoDB"))
+    .catch((err) => console.error("Error de conexión:", err));
 
 // Rutas
 const jobRoutes = require("./routes/jobRoutes");
