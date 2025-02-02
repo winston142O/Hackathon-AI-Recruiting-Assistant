@@ -8,7 +8,6 @@ import CountUp from 'react-countup';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function Dashboard() {
-
   // Datos dummy
   const applicantsData = {
     labels: ['Hired', 'Rejected', 'Pending'],
@@ -30,8 +29,11 @@ export default function Dashboard() {
     ],
   };
 
-  const getTotalApplicants = () => {
-    return applicantsData.datasets[0].data.reduce((sum, num) => sum + num, 0);
+  const getTotalApplicants = (chartData) => {
+    return chartData.datasets.reduce(
+        (total, dataset) => total + dataset.data.reduce((sum, num) => sum + num, 0),
+        0
+      );
   };
 
   const topApplicants = [
@@ -54,8 +56,8 @@ export default function Dashboard() {
           <div className="total-applicants" data-aos="fade-right">
             <h2>Total Applicants</h2>
             <p className="total-number">
-              <CountUp start={0} end={24} duration={3} /> {/* Animación del número */}
-            </p>          
+              <CountUp start={0} end={getTotalApplicants(applicantsData)} duration={3}/>
+            </p>
           </div>
 
           <div className="pie-chart" data-aos="zoom-in">
@@ -84,7 +86,7 @@ export default function Dashboard() {
                 }
               }}
               height={750}
-              width={750}              
+              width={750}
             />
           </div>
         </div>

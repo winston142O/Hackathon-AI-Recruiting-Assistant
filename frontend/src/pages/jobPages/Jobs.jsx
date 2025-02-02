@@ -53,7 +53,7 @@ export function JobPage() {
                     setError(err);
                     setLoading(false);
                 });
-        }, 2000);
+        }, 750);
     }, [filterName, filterOpen, filterSort, jobsUrl]);
 
     // Abrir el modal y guardar el job a eliminar
