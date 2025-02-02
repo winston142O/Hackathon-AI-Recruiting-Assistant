@@ -1,7 +1,7 @@
 // src/pages/JobPage.jsx
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Spinner } from "../components/Spinner";
+import { Spinner } from "../../components/Spinner";
 import { toast } from "react-toastify";
 import { useCallback } from "react";
 import { Link } from "react-router-dom";

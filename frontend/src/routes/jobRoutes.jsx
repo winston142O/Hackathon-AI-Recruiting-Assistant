@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
-import { JobPage } from "../pages/Jobs";
-import { CreateJobs } from "../pages/CreateJobs";
-import { EditJobs } from "../pages/EditJobs";
+import { JobPage } from "../pages/jobPages/Jobs";
+import { CreateJobs } from "../pages/jobPages/CreateJobs";
+import { EditJobs } from "../pages/jobPages/EditJobs";
 
 export function JobRoutes() {
     return (
