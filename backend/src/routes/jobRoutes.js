@@ -205,7 +205,7 @@ router.get("/applications/:applicationId", async (req, res) => {
 });
 
 /**
- * GET - Retrieve CV review for an application
+ * GET - Recuperar la revisión de un CV
  */
 router.get("/applications/:applicationId/review", async (req, res) => {
     try {
@@ -225,6 +225,48 @@ router.get("/applications/:applicationId/review", async (req, res) => {
 
     } catch (error) {
         console.error("Error fetching CV review:", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+/**
+ * GET - Recuperar todas las aplicaciones de CV para una vacante
+ */
+router.get("/:jobId/applications", async (req, res) => {
+    try {
+        const { jobId } = req.params;
+
+        // Buscar todas las aplicaciones en la base de datos
+        const applications = await Application.find({ jobId });
+
+        return res.status(200).json({
+            message: "Applications retrieved successfully",
+            applications,
+        });
+
+    } catch (error) {
+        console.error("Error fetching CV applications:", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+/**
+ * GET - Recuperar todas las revisiones de CV para una vacante
+ */
+router.get("/applications/:jobId/reviews", async (req, res) => {
+    try {
+        const { jobId } = req.params;
+
+        // Buscar todas las revisiones en la base de datos
+        const reviews = await ApplicationReview.find({ jobId });
+
+        return res.status(200).json({
+            message: "Reviews retrieved successfully",
+            reviews,
+        });
+
+    } catch (error) {
+        console.error("Error fetching CV reviews:", error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
 });
