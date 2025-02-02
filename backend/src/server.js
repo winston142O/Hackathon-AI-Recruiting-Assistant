@@ -24,11 +24,8 @@ mongoose
 
 
 // Rutas
-// const authRoutes = require("./routes/auth");
-// const privateRoutes = require("./routes/private");
-
-// app.use("/auth", authRoutes);
-// app.use("/private", privateRoutes);
+const jobRoutes = require("./routes/jobRoutes");
+app.use("/jobs", jobRoutes);
 
 app.get("/", (req, res) => {
     res.send("API con Express y MongoDB en HTTP 🚀");
