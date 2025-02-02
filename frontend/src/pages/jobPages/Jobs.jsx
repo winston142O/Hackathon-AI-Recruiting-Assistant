@@ -15,6 +15,10 @@ export function JobPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    // Estado para el modal de eliminación
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [jobToDelete, setJobToDelete] = useState(null);
+
     // Estado de los filtros
     const [filterName, setFilterName] = useState("");
     const [filterOpen, setFilterOpen] = useState("all"); // 'all' | 'true' | 'false'
@@ -51,22 +55,29 @@ export function JobPage() {
         }, 2000);
     }, [filterName, filterOpen, filterSort, jobsUrl]);
 
-    const deleteJob = (id) => {
-        window.confirm("Are you sure you want to delete this vacant?");
+    // Abrir el modal y guardar el job a eliminar
+    const handleDeleteClick = (job) => {
+        setJobToDelete(job);
+        setShowDeleteModal(true);
+    };
+
+    // Confirmar eliminación
+    const confirmDeleteJob = () => {
+        if (!jobToDelete) return;
+        
         setLoading(true);
-        setError(null);
-        axios.delete(`${jobsUrl}/jobs/${id}`)
-        .then(response => {
-            setJobs(response.data);
-            setLoading(false);
-            fetchJobs();
-            toast.success("Vacante eliminada correctamente")
-        })
-        .catch(error => {
-            console.error("error deleting job:", error);
-            setError(error);
-        });
-    }
+        axios.delete(`${jobsUrl}/jobs/${jobToDelete._id}`)
+            .then(() => {
+                setJobs(jobs.filter(job => job._id !== jobToDelete._id)); // Eliminar del estado
+                setShowDeleteModal(false); // Cerrar el modal
+                toast.success("Vacante eliminada correctamente");
+            })
+            .catch(error => {
+                console.error("Error deleting job:", error);
+                setError(error);
+            })
+            .finally(() => setLoading(false));
+    };
 
     useEffect(() => {
         const delay = setTimeout(() => {
@@ -187,7 +198,7 @@ export function JobPage() {
                                     <div className="d-flex flex-column gap-2">
                                         <button className="btn btn-primary">Visualizar</button>
                                         <Link className="btn btn-secondary" to={`/jobs/editJob/${job._id}`}>Editar</Link>
-                                        <button className="btn btn-danger"  onClick={() => deleteJob(job._id)}>Eliminar</button>
+                                        <button className="btn btn-danger" onClick={() => handleDeleteClick(job)}>Eliminar</button>
                                     </div>
                                 </div>
                             </div>
@@ -196,6 +207,27 @@ export function JobPage() {
                 </div>
             ) : (
                 <p>No hay vacantes disponibles.</p>
+            )}
+
+            {/* Modal de Confirmación de Eliminación */}
+            {showDeleteModal && (
+                <div className="modal fade show d-block" tabIndex="-1" role="dialog">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Confirmar Eliminación</h5>
+                                <button type="button" className="btn-close" onClick={() => setShowDeleteModal(false)}></button>
+                            </div>
+                            <div className="modal-body">
+                                <p>¿Estás seguro de que deseas eliminar la vacante <strong>{jobToDelete?.jobTitle}</strong>?</p>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" onClick={() => setShowDeleteModal(false)}>Cancelar</button>
+                                <button type="button" className="btn btn-danger" onClick={confirmDeleteJob}>Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             )}
         </div>
     );

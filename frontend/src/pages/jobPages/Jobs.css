@@ -19,3 +19,12 @@
     transform: translateY(-4px);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
+
+.modal.fade {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.modal.fade.show {
+    opacity: 1;
+}
