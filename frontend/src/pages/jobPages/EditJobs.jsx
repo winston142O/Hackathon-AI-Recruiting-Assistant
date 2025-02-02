@@ -58,7 +58,7 @@ export function EditJobs() {
         <div className="container mt-4">
             <h1 className="mb-4">Editar Vacante</h1>
 
-            <Link to="/jobs" className="btn btn-secondary mb-3">Volver a la lista de jobs</Link>
+            <Link to="/jobs" className="btn btn-secondary mb-3">Volver a la lista de trabajos</Link>
 
             <p className="text-muted">Modifica los datos de la vacante y guarda los cambios.</p>
 
