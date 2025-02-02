@@ -19,7 +19,7 @@ export function CreateJobs(){
         .catch(error => {
             setError(error);
             setLoading(false);
-        });
+        }); 
     }, []);
 
     const handleChange = (e) => {
