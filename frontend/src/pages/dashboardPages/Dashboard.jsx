@@ -125,7 +125,7 @@ export default function Dashboard() {
         {/* Sección del Total de Aplicantes */}
         <div className="chart-section">
           <div className="total-applicants" data-aos="fade-right">
-            <h2>Total Aplicaciones</h2>
+            <h2>Total de Aplicaciones</h2>
             <p className="total-number">
               <CountUp start={0} end={applications.length} duration={3} />
             </p>
