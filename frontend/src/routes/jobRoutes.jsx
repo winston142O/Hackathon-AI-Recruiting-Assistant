@@ -4,6 +4,7 @@ import { CreateJobs } from "../pages/JobPages/CreateJobs";
 import { EditJobs } from "../pages/JobPages/EditJobs";
 import Dashboard from "../pages/dashboardPages/Dashboard";
 import { JobDetailPage } from "../pages/JobPages/jobDetailsPage";
+import { ReviewPage } from "../pages/dashboardPages/ReviewPage";
 
 export function JobRoutes() {
     return (
@@ -12,6 +13,7 @@ export function JobRoutes() {
             <Route path="/createJob" element={<CreateJobs/>}/>
             <Route path="/editJob/:jobId" element={<EditJobs/>}/>
             <Route path="/dashboard/:jobId" element={<Dashboard/>}/>
+            <Route path="/:jobId/applications/:applicationId/review" element={<ReviewPage />} />
             <Route path="/jobDetails/:id" element={<JobDetailPage />} />
         </Routes>
     );
