@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from "react";
 
-export function createJobs(){
+export function CreateJobs(){
     
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -34,7 +34,7 @@ export function createJobs(){
         setFormData({ jobTitle: "", jobDescription: "" }); // Limpiar formulario
         })
         .catch(error =>{
-            console.error("error creando trabajo:", error);
+            console.error("error creating job:", error);
             setError(error);
         });
     }
@@ -66,20 +66,6 @@ export function createJobs(){
             />
             <button type="submit">Add Job</button>
         </form>
-
-        <h2>Job Listings</h2>
-        {jobs.length > 0 ? (
-            <ul>
-                {jobs.map(job => (
-                    <li key={job._id}>
-                        <h3>{job.jobTitle}</h3>
-                        <p>{job.jobDescription}</p>
-                    </li>
-                ))}
-            </ul>
-        ) : (
-            <p>No jobs available</p>
-        )}
     </div>
     );
 }
