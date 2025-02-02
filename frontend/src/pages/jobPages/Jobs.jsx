@@ -204,7 +204,7 @@ export function JobPage() {
                                                 {job.jobTitle}
                                         </Link>
 
-                                        <p className="card-text">{job.jobDescription}</p>
+                                        {/* <p className="card-text">{job.jobDescription}</p> */}
                                     </div>
                                     <div className="d-flex flex-column gap-2">
                                         <Link className="btn btn-primary" to={`/jobs/dashboard/${job._id}`}>Visualizar</Link>
