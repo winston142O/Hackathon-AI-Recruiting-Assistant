@@ -5,9 +5,8 @@ export function Navbar() {
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-3 shadow-lg">
             <div className="container">
                 <Link to="/Jobs" className="navbar-brand">
-                    Demo Vacantes
+                Job Recruiting Assistance
                 </Link>
-
                 {/* Toggler para móvil */}
                 <button
                     className="navbar-toggler"
