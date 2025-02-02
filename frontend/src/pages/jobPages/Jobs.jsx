@@ -51,6 +51,23 @@ export function JobPage() {
         }, 2000);
     }, [filterName, filterOpen, filterSort, jobsUrl]);
 
+    const deleteJob = (id) => {
+        window.confirm("Are you sure you want to delete this vacant?");
+        setLoading(true);
+        setError(null);
+        axios.delete(`${jobsUrl}/jobs/${id}`)
+        .then(response => {
+            setJobs(response.data);
+            setLoading(false);
+            fetchJobs();
+            toast.success("Vacante eliminada correctamente")
+        })
+        .catch(error => {
+            console.error("error deleting job:", error);
+            setError(error);
+        });
+    }
+
     useEffect(() => {
         const delay = setTimeout(() => {
             fetchJobs();
@@ -170,7 +187,7 @@ export function JobPage() {
                                     <div className="d-flex flex-column gap-2">
                                         <button className="btn btn-primary">Visualizar</button>
                                         <Link className="btn btn-secondary" to={`/jobs/editJob/${job._id}`}>Editar</Link>
-                                        <button className="btn btn-danger">Eliminar</button>
+                                        <button className="btn btn-danger"  onClick={() => deleteJob(job._id)}>Eliminar</button>
                                     </div>
                                 </div>
                             </div>

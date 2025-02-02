@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { JobPage } from "../pages/Jobs";
+import { JobPage } from "../pages/JobPages/Jobs";
 import { CreateJobs } from "../pages/JobPages/CreateJobs";
 import { EditJobs } from "../pages/JobPages/EditJobs";
 

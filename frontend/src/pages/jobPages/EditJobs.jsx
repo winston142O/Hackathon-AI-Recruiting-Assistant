@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export function EditJobs(){
 
@@ -36,11 +37,11 @@ export function EditJobs(){
         setFormData({ ...formData, [e.target.name]: e.target.value });
     } 
 
-    console.log(formData)
     const handleSubmit = (e) =>{
         e.preventDefault();
         axios.put(`${jobsUrl}/jobs/${jobId}`, formData)
         .then(response =>{
+            toast.success("Vacante actualizada exitosamente")
             navigate("/jobs");
         })
         .catch(error =>{
