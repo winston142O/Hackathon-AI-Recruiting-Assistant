@@ -2,7 +2,7 @@
   "name": "backend-ai-recruiting-assistant",
   "version": "1.0.0",
   "description": "Backend para el proyecto de asistencia de reclutamiento propulsada por inteligencia artificial.",
-  "main": "server.js",
+  "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
@@ -11,8 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "helmet": "^8.0.0",
     "mongoose": "^8.9.6"
   },
   "devDependencies": {
