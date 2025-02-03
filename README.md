@@ -4,11 +4,11 @@
 [![Express](https://img.shields.io/badge/-Express-373737?style=for-the-badge&logo=Express&logoColor=white)](https://expressjs.com/)
 [![MongoDB](https://img.shields.io/badge/-MongoDB-13aa52?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 [![AWS S3](https://img.shields.io/badge/AWS_S3-569A31?logo=amazons3&logoColor=fff&style=for-the-badge)](https://aws.amazon.com/s3/)
-[![OpenAI API](https://img.shields.io/badge/OpenAI-%23412991?logo=openai&logoColor=white)](https://platform.openai.com/docs/overview)
 [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=Vite&logoColor=white)](https://vite.dev/)
 [![React](https://img.shields.io/badge/-ReactJs-61DAFB?logo=react&logoColor=white&style=for-the-badge)](https://react.dev/)
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
 [![AOS](https://img.shields.io/badge/Animate_On_Scroll-blue)](https://michalsnik.github.io/aos/)
+[![OpenAI API](https://img.shields.io/badge/OpenAI-%23412991?logo=openai&logoColor=white)](https://platform.openai.com/docs/overview)
 
 A modern web application to manage job vacancies and analyze applicant CVs using AI.
 
@@ -17,7 +17,7 @@ A modern web application to manage job vacancies and analyze applicant CVs using
 - [Usage](#Usage)
 - [License](#license)
 
-- Prerequisites
+## Prerequisites
  -npm
  -node
  -mongodb
@@ -53,6 +53,7 @@ cd Hackathon-AI-Recruiting-Assistant
     ```
 
     2.2 Frontend:
+
     ```bash
     cd frontend
 
