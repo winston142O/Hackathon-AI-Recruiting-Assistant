@@ -18,11 +18,11 @@ A modern web application to manage job vacancies and analyze applicant CVs using
 - [License](#license)
 
 ## Prerequisites
- -npm
- -node
- -mongodb
- -an openai api key
- -an aws access key
+ - npm
+ - node
+ - mongodb
+ - an openai api key
+ - an aws access key
 
 ## Installation
 1. Clone the repository:
